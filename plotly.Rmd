@@ -1,0 +1,42 @@
+---
+title: "Plotly and flexdashboard"
+author: "Ashley Kang"
+date: "10/23/2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(viridis)
+library(p8105.datasets)
+
+library(plotly)
+```
+
+```{r loading_data}
+set.seed(1)
+
+data(nyc_airbnb)
+nyc_airbnb = 
+  nyc_airbnb %>% 
+  mutate(rating = review_scores_location / 2) %>%
+  select(boro = neighbourhood_group, neighbourhood, rating, price, room_type,
+         latitude, longitude) %>%
+  filter(!is.na(rating), 
+         boro == "Manhattan",
+         room_type == "Entire home/apt",
+         price %in% 100:500)  %>% 
+  sample_n(5000)
+```
+
+## Plotly scatterplot
+```{r plotly_scatterplot}
+nyc_airbnb %>%
+  plot_ly(x = ~longitude, y = ~latitude, type = "scatter", mode = "markers",
+          alpha = 0.5, #gives some transparency
+          color = ~price)
+# syntax is just x = ~variable name, y = ~variable name, color = ~variable name
+# plot type = scatter
+```
+

@@ -21,3 +21,5 @@ I can link directly to my [about page](about.html)
 Wish I were back!!
 
 <img src="images/cancun.png" style="width:75%">
+
+
